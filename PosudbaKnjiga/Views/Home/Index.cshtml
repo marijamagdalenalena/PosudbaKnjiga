@@ -1,0 +1,46 @@
+﻿@using System.Collections
+@model PosudbaKnjiga.Models.knjiznica
+
+@{
+    ViewBag.Title = "Knjiznica";
+}
+
+<p>
+    @using (@Html.BeginForm("Index", "Home",FormMethod.Get ))
+    {
+        @Html.TextBox("search") <input type="submit" value="Pretrazi" />
+    }
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+          Naziv
+        </th>
+        <th>
+           Autor
+        </th>
+        <th>
+            Posudeno
+        </th>
+    </tr>
+    @foreach (var item in Model.knjige)
+    {
+        <tr>
+            <td>
+            @item.naziv
+            </td>
+            <td>
+               @item.autor
+            </td>
+            <td>              
+               @if(String.IsNullOrEmpty(item.posudio))
+                {
+                    @Html.ActionLink("Rezerviraj", "Rezerviraj", "Home", new { oznaka = item.oznaka }, null);
+                }
+                else               
+                   @item.posudio
+                </td>
+        </tr>
+    }
+</table>
